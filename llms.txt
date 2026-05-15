@@ -1,0 +1,23 @@
+# Animated Circuit Generator
+
+Animated Circuit Generator is an MIT-licensed Vite static app that creates animated SVG circuit snippets for websites.
+
+Primary user flow:
+1. Select one of twenty built-in circuit presets or paste a custom SVG.
+2. Choose an animation mode: flow, pulse, draw, shimmer, or paused.
+3. Adjust speed, dash length, stroke width, glow, stagger, scale, opacity, line caps, line joins, node fill, circuit color, direction, background, texture, and padding.
+4. Copy SVG, CSS, complete embed HTML, or an AI implementation prompt.
+
+Implementation API:
+- SVG class: animated-circuit
+- Animation classes: circuit-flow, circuit-pulse, circuit-draw, circuit-shimmer, circuit-paused
+- Texture classes: circuit-pattern-none, circuit-pattern-grid, circuit-pattern-scanlines, circuit-pattern-dots
+- CSS variables: --circuit-color, --circuit-bg, --circuit-bg-alt, --circuit-speed, --circuit-stroke, --circuit-glow, --circuit-dash, --circuit-opacity, --circuit-linecap, --circuit-linejoin, --circuit-node-fill, --circuit-direction, --circuit-padding
+
+Important files:
+- src/circuits.js contains the built-in SVG presets.
+- src/main.js builds the live preview and generated snippets.
+- src/styles.css contains UI styles and the reusable animation CSS.
+- AI.md gives implementation guidance for code models.
+
+License: MIT.

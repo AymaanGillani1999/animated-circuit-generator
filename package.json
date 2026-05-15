@@ -1,0 +1,22 @@
+{
+  "name": "animated-circuit-generator",
+  "version": "0.1.0",
+  "description": "Open-source animated SVG circuit generator with copyable CSS, SVG, and LLM-ready implementation docs.",
+  "type": "module",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1"
+  },
+  "keywords": [
+    "svg",
+    "css",
+    "animation",
+    "circuit",
+    "generator"
+  ],
+  "license": "MIT",
+  "devDependencies": {
+    "vite": "^7.1.12"
+  }
+}
