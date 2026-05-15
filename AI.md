@@ -47,7 +47,8 @@ Add this animated SVG circuit to my page. Place the CSS once in the nearest appr
 
 ## Files Worth Reading
 
-- `src/circuits.js`: built-in SVG presets.
+- `src/circuit-presets/`: built-in SVG presets split by category.
+- `src/circuit-presets/index.js`: grouped and flat preset exports.
 - `src/main.js`: export generation and custom SVG handling.
 - `src/styles.css`: app UI styling and animation classes.
 - `llms.txt`: concise model-facing project summary.

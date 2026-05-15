@@ -56,6 +56,17 @@ The generated CSS is controlled by these variables:
 - `--circuit-direction`
 - `--circuit-padding`
 
+## Preset Structure
+
+Circuit presets are split by category under `src/circuit-presets/`:
+
+- `core.js`: general traces, grids, chips, branches, and stacks.
+- `boards.js`: boards, data lanes, frames, connectors, and maze routing.
+- `networks.js`: mesh, hex, orbit, and tree structures.
+- `signals.js`: antenna, waveform, and serpentine signal shapes.
+
+`src/circuit-presets/index.js` exports both `circuitCategories` for grouped UI selectors and `circuits` for flat lookup.
+
 ## License
 
 MIT. See `LICENSE`.

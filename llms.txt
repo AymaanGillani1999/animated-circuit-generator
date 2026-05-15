@@ -15,7 +15,8 @@ Implementation API:
 - CSS variables: --circuit-color, --circuit-bg, --circuit-bg-alt, --circuit-speed, --circuit-stroke, --circuit-glow, --circuit-dash, --circuit-opacity, --circuit-linecap, --circuit-linejoin, --circuit-node-fill, --circuit-direction, --circuit-padding
 
 Important files:
-- src/circuits.js contains the built-in SVG presets.
+- src/circuit-presets/ contains the built-in SVG presets split by category.
+- src/circuit-presets/index.js exports circuitCategories and the flat circuits array.
 - src/main.js builds the live preview and generated snippets.
 - src/styles.css contains UI styles and the reusable animation CSS.
 - AI.md gives implementation guidance for code models.

@@ -1,5 +1,5 @@
 import "./styles.css";
-import { circuits } from "./circuits.js";
+import { circuitCategories, circuits } from "./circuit-presets/index.js";
 
 const state = {
   source: "preset",
@@ -67,8 +67,12 @@ const elements = {
 };
 
 function init() {
-  elements.circuitSelect.innerHTML = circuits
-    .map((circuit) => `<option value="${circuit.id}">${circuit.name}</option>`)
+  elements.circuitSelect.innerHTML = circuitCategories
+    .map(
+      (category) => `<optgroup label="${category.label}">
+${category.circuits.map((circuit) => `<option value="${circuit.id}">${circuit.name}</option>`).join("")}
+</optgroup>`
+    )
     .join("");
 
   bindInput(elements.circuitSelect, "circuitId");
