@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Open-source animated SVG circuit generator with sliders, color controls, background controls, and copyable CSS/SVG snippets."
+    />
+    <title>Animated Circuit Generator</title>
+    <script type="application/json" id="llm-implementation-metadata">
+      {
+        "project": "Animated Circuit Generator",
+        "license": "MIT",
+        "purpose": "Generate animated SVG circuit snippets for websites.",
+        "integrationApi": {
+          "classes": [
+            "animated-circuit",
+            "circuit-flow",
+            "circuit-pulse",
+            "circuit-draw",
+            "circuit-shimmer",
+            "circuit-paused"
+          ],
+          "cssVariables": [
+            "--circuit-color",
+            "--circuit-bg",
+            "--circuit-bg-alt",
+            "--circuit-speed",
+            "--circuit-stroke",
+            "--circuit-glow",
+            "--circuit-dash",
+            "--circuit-opacity",
+            "--circuit-linecap",
+            "--circuit-linejoin",
+            "--circuit-node-fill",
+            "--circuit-direction",
+            "--circuit-padding"
+          ],
+          "copyTargets": ["svg", "css", "complete-html", "ai-prompt"]
+        }
+      }
+    </script>
+    <script type="module" crossorigin src="./assets/index-C2pA3In5.js"></script>
+    <link rel="stylesheet" crossorigin href="./assets/index-DASqVqg-.css">
+  </head>
+  <body>
+    <main id="app" class="shell">
+      <section class="workspace" aria-label="Animated circuit generator">
+        <div class="preview-pane">
+          <div class="topbar">
+            <div>
+              <p class="eyebrow">MIT open source</p>
+              <h1>Animated Circuit Generator</h1>
+              <p class="dek">Tune an SVG circuit, copy the production CSS, and hand the same recipe to code models.</p>
+            </div>
+            <div class="top-actions">
+              <span class="status-pill">20 presets</span>
+              <a class="repo-link" href="https://opensource.org/license/mit" target="_blank" rel="noreferrer">MIT</a>
+            </div>
+          </div>
+
+          <div class="stage-wrap" id="stageWrap">
+            <div class="stage" id="stage" aria-live="polite"></div>
+          </div>
+
+          <div class="export-grid" aria-label="Copy generated assets">
+            <section class="export-panel active-export">
+              <div class="panel-heading">
+                <div>
+                  <h2>SVG</h2>
+                  <p>Markup only</p>
+                </div>
+                <button class="copy-button" data-copy="svg">Copy</button>
+              </div>
+              <pre><code id="svgOutput"></code></pre>
+            </section>
+            <section class="export-panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>CSS</h2>
+                  <p>Reusable styles</p>
+                </div>
+                <button class="copy-button" data-copy="css">Copy</button>
+              </div>
+              <pre><code id="cssOutput"></code></pre>
+            </section>
+            <section class="export-panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>Embed</h2>
+                  <p>Complete snippet</p>
+                </div>
+                <button class="copy-button" data-copy="embed">Copy</button>
+              </div>
+              <pre><code id="embedOutput"></code></pre>
+            </section>
+            <section class="export-panel">
+              <div class="panel-heading">
+                <div>
+                  <h2>AI Prompt</h2>
+                  <p>Implementation handoff</p>
+                </div>
+                <button class="copy-button" data-copy="ai">Copy</button>
+              </div>
+              <pre><code id="aiOutput"></code></pre>
+            </section>
+          </div>
+        </div>
+
+        <aside class="control-pane" aria-label="Circuit controls">
+          <div class="control-intro">
+            <h2>Controls</h2>
+            <p>Changes update the preview and every export block.</p>
+          </div>
+          <div class="control-section">
+            <h2>Circuit</h2>
+            <label>
+              Type
+              <select id="circuitSelect"></select>
+            </label>
+            <div class="segmented" role="group" aria-label="SVG source">
+              <button class="segment active" data-source="preset">Preset</button>
+              <button class="segment" data-source="custom">Paste SVG</button>
+            </div>
+            <label class="custom-svg-field" id="customSvgField">
+              Custom SVG
+              <textarea id="customSvg" spellcheck="false" placeholder="<svg viewBox=&quot;0 0 200 200&quot;>...</svg>"></textarea>
+            </label>
+            <p class="validation" id="validationMessage" role="status"></p>
+          </div>
+
+          <div class="control-section">
+            <h2>Animation</h2>
+            <label>
+              Mode
+              <select id="animationMode">
+                <option value="flow">Flow</option>
+                <option value="pulse">Pulse</option>
+                <option value="draw">Draw</option>
+                <option value="shimmer">Shimmer</option>
+                <option value="paused">Paused</option>
+              </select>
+            </label>
+            <label>
+              Direction
+              <select id="animationDirection">
+                <option value="normal">Forward</option>
+                <option value="reverse">Reverse</option>
+                <option value="alternate">Alternate</option>
+              </select>
+            </label>
+            <label>
+              Speed <span id="speedValue"></span>
+              <input id="speed" type="range" min="1.5" max="12" step="0.1" value="5" />
+            </label>
+            <label>
+              Dash length <span id="dashValue"></span>
+              <input id="dash" type="range" min="20" max="280" step="1" value="150" />
+            </label>
+            <label>
+              Stroke <span id="strokeValue"></span>
+              <input id="stroke" type="range" min="0.75" max="6" step="0.05" value="2" />
+            </label>
+            <label>
+              Glow <span id="glowValue"></span>
+              <input id="glow" type="range" min="0" max="24" step="1" value="8" />
+            </label>
+            <label>
+              Stagger <span id="staggerValue"></span>
+              <input id="stagger" type="range" min="0" max="0.6" step="0.02" value="0.16" />
+            </label>
+            <label>
+              Scale <span id="scaleValue"></span>
+              <input id="scale" type="range" min="55" max="150" step="1" value="100" />
+            </label>
+          </div>
+
+          <div class="control-section">
+            <h2>Color</h2>
+            <label>
+              Circuit color
+              <input id="circuitColor" type="color" value="#3f7cff" />
+            </label>
+            <label>
+              Opacity <span id="opacityValue"></span>
+              <input id="opacity" type="range" min="0.25" max="1" step="0.01" value="1" />
+            </label>
+            <label>
+              Line caps
+              <select id="lineCap">
+                <option value="round">Round</option>
+                <option value="square">Square</option>
+                <option value="butt">Flat</option>
+              </select>
+            </label>
+            <label>
+              Line joins
+              <select id="lineJoin">
+                <option value="round">Round</option>
+                <option value="bevel">Bevel</option>
+                <option value="miter">Miter</option>
+              </select>
+            </label>
+            <label>
+              Nodes
+              <select id="nodeFill">
+                <option value="background">Background fill</option>
+                <option value="color">Circuit fill</option>
+                <option value="transparent">Transparent</option>
+              </select>
+            </label>
+            <label>
+              Background
+              <select id="backgroundMode">
+                <option value="solid">Solid</option>
+                <option value="gradient">Gradient</option>
+              </select>
+            </label>
+            <label>
+              Texture
+              <select id="backgroundPattern">
+                <option value="none">None</option>
+                <option value="grid">Fine grid</option>
+                <option value="scanlines">Scanlines</option>
+                <option value="dots">Pin dots</option>
+              </select>
+            </label>
+            <label>
+              Background color
+              <input id="backgroundColor" type="color" value="#0b111b" />
+            </label>
+            <label class="gradient-field">
+              Gradient color
+              <input id="backgroundAlt" type="color" value="#18243b" />
+            </label>
+            <label>
+              Preview padding <span id="paddingValue"></span>
+              <input id="stagePadding" type="range" min="12" max="96" step="1" value="52" />
+            </label>
+          </div>
+        </aside>
+      </section>
+    </main>
+  </body>
+</html>
